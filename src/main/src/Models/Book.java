@@ -18,6 +18,10 @@ public class Book {
         this.idAuthor = idAuthor;
     }
 
+    public Book() {
+
+    }
+
     public int getIdBook() {
         return idBook;
     }

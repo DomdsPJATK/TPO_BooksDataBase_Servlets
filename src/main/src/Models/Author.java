@@ -47,4 +47,5 @@ public class Author {
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
+
 }
