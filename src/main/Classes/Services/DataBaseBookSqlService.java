@@ -46,7 +46,9 @@ public class DataBaseBookSqlService {
     public Book getBook(String index) {
         ResultSet resultSet = null;
         try {
-            resultSet = statement.executeQuery("Select * FROM book WHERE idbook=" + index);
+            PreparedStatement p = connection.prepareStatement("Select * FROM book WHERE idbook= ?");
+            p.setString(1, index);
+            resultSet = p.executeQuery();
             if(resultSet.next()){
                 Book book = new Book();
                 book.setIdAuthor(resultSet.getInt("idauthor"));
@@ -64,7 +66,9 @@ public class DataBaseBookSqlService {
     public Author getAuthor(String index){
         ResultSet resultSet = null;
         try {
-            resultSet = statement.executeQuery("Select * FROM author WHERE idauthor=" + index);
+            PreparedStatement p = connection.prepareStatement("Select * FROM author WHERE idauthor= ?");
+            p.setString(1, index);
+            resultSet = p.executeQuery();
             if(resultSet.next()){
                 Author author = new Author();
                 author.setIdAuthor(resultSet.getInt("idauthor"));
