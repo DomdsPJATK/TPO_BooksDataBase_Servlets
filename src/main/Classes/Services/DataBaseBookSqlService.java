@@ -2,6 +2,7 @@ package Services;
 
 import Models.Book;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,4 +42,22 @@ public class DataBaseBookSqlService {
         return res;
     }
 
+    public Book getBook(String index) {
+        ResultSet resultSet = null;
+        try {
+            resultSet = statement.executeQuery("Select * FROM book WHERE idbook=" + index);
+            if(resultSet.next()){
+                Book book = new Book();
+                book.setIdAuthor(resultSet.getInt("idauthor"));
+                book.setIdBook(resultSet.getInt("idbook"));
+                book.setTitle(resultSet.getString("title"));
+                book.setNumberOfPages(resultSet.getInt("pages"));
+                book.setReleaseDate(resultSet.getDate("creationdate"));
+                return book;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
