@@ -1,5 +1,6 @@
 package Services;
 
+import Models.Author;
 import Models.Book;
 
 import java.awt.*;
@@ -54,10 +55,39 @@ public class DataBaseBookSqlService {
                 book.setNumberOfPages(resultSet.getInt("pages"));
                 book.setReleaseDate(resultSet.getDate("creationdate"));
                 return book;
-            }
+            } else return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
+
+    public Author getAuthor(String index){
+        ResultSet resultSet = null;
+        try {
+            resultSet = statement.executeQuery("Select * FROM author WHERE idauthor=" + index);
+            if(resultSet.next()){
+                Author author = new Author();
+                author.setIdAuthor(resultSet.getInt("idauthor"));
+                author.setSurname(resultSet.getString("surname"));
+                author.setName(resultSet.getString("name"));
+                author.setBirthdate(resultSet.getDate("birthdate"));
+                return author;
+            } else return null;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public Book setAuthorsForBook(Book book){
+        if(book == null) return null;
+        Author author = getAuthor(String.valueOf(book.getIdAuthor()));
+        if(author == null) {
+            book.setAuthorName("Nieznane");
+            book.setAuthorSurname("Nieznane");
+        }
+        book.setAuthorSurname(author.getSurname());
+        book.setAuthorName(author.getName());
+        return book;
+    }
+
 }

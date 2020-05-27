@@ -9,6 +9,8 @@ public class Book {
     private int numberOfPages;
     private Date releaseDate;
     private int idAuthor;
+    private String authorName;
+    private String authorSurname;
 
     public Book(int idBook, String title, int numberOfPages, Date releaseDate, int idAuthor) {
         this.idBook = idBook;
@@ -62,4 +64,19 @@ public class Book {
         this.idAuthor = idAuthor;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorSurname() {
+        return authorSurname;
+    }
+
+    public void setAuthorSurname(String authorSurname) {
+        this.authorSurname = authorSurname;
+    }
 }

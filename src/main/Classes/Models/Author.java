@@ -16,6 +16,10 @@ public class Author {
         this.birthdate = birthdate;
     }
 
+    public Author() {
+
+    }
+
     public int getIdAuthor() {
         return idAuthor;
     }

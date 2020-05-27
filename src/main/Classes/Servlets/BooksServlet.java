@@ -36,8 +36,13 @@ public class BooksServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        String row = getRowHTML(sqlService.getBook(request.getParameter("index")));
-        out.println(addCSS( "<table>" + addHeadersTable() + row + "</table>"));
+        Book book = sqlService.getBook(request.getParameter("index"));
+        if(book != null) {
+            book = sqlService.setAuthorsForBook(book);
+            String row = getRowHTML(book);
+            out.println(addCSS("<table>" + addHeadersTable() + row + "</table>"));
+        } else
+            out.println(addCSS("Brak podanego wpisu w bazie"));
     }
 
     public String addHeadersTable(){
@@ -47,7 +52,8 @@ public class BooksServlet extends HttpServlet {
                 "<th>Tytuł</th>\n" +
                 "<th>Liczba stron</th>\n" +
                 "<th>Data wydania</th>\n" +
-                "<th>Autor</th>\n" +
+                "<th>Imię autora</th>\n" +
+                "<th>Nazwisko autora</th>\n" +
                 "</tr>\n" +
                 "</thead>";
     }
@@ -56,6 +62,7 @@ public class BooksServlet extends HttpServlet {
         String res = "<table>";
         res+=addHeadersTable();
         for (Book book : books) {
+            book = sqlService.setAuthorsForBook(book);
             res+=getRowHTML(book);
         }
         res += "</table>";
@@ -69,7 +76,8 @@ public class BooksServlet extends HttpServlet {
         res += "<th>" + book.getTitle() + "</th>";
         res += "<th>" + book.getNumberOfPages() + "</th>";
         res += "<th>" + book.getReleaseDate() + "</th>";
-        res += "<th>" + book.getIdAuthor() + "</th>";
+        res += "<th>" + book.getAuthorName() + "</th>";
+        res += "<th>" + book.getAuthorSurname() + "</th>";
         res += "</tr>";
         return res;
     }
@@ -84,7 +92,7 @@ public class BooksServlet extends HttpServlet {
                 "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\">\n" +
                 "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\" type=\"\"></script>\n" +
                 "</head>\n" +
-                "<body>\n" + text +
+                "<body>" + text +
                 "</body>\n" +
                 "</html>\n";
     }
