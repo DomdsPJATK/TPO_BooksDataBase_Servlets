@@ -57,5 +57,5 @@ public class Book {
     public void setIdAuthor(int idAuthor) {
         this.idAuthor = idAuthor;
     }
-    
+
 }
